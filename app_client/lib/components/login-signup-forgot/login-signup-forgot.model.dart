@@ -6,51 +6,26 @@ class LoginSignupForgotModel
     extends MomentumModel<LoginSignupForgotController> {
   LoginSignupForgotModel(
     LoginSignupForgotController controller, {
-    this.email,
-    this.password,
-    this.username,
     this.loading,
+    this.isLoginSelected,
+    this.opacity,
   }) : super(controller);
 
-  final String email;
-  final String password;
-  final String username;
   final bool loading;
+  final bool isLoginSelected; // switch between login & signup screens
+  final double opacity;
 
   @override
   void update({
-    String email,
-    String password,
-    String username,
     bool loading,
+    double opacity,
+    bool isLoginSelected,
   }) {
     LoginSignupForgotModel(
       controller,
-      email: email ?? this.email,
-      password: password ?? this.password,
-      username: username ?? this.username,
       loading: loading ?? this.loading,
+      isLoginSelected: isLoginSelected ?? this.isLoginSelected,
+      opacity: opacity ?? this.opacity,
     ).updateMomentum();
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'email': email,
-      'password': password,
-      'username': username,
-      'loading': loading,
-    };
-  }
-
-  LoginSignupForgotModel fromJson(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return LoginSignupForgotModel(
-      controller,
-      email: map['email'],
-      password: map['password'],
-      username: map['username'],
-      loading: map['loading'],
-    );
   }
 }

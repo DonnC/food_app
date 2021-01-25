@@ -11,16 +11,18 @@ class LoginSignupForgotController
   LoginSignupForgotModel init() {
     return LoginSignupForgotModel(
       this,
-      email: '',
-      password: '',
-      username: '',
       loading: false,
+      isLoginSelected: true,
+      opacity: 1.0,
     );
   }
 
-  Future<void> login() async {
-    final _authService = getService<AuthService>(alias: appAlias);
-    var _result = _authService.login(model.email, model.password);
+  Future<void> login(String email, String password) async {
+    final _authService = getService<AuthService>();
+
+    model.update(loading: true);
+
+    var _result = await _authService.login(email, password);
 
     if (_result == true) {
       sendEvent(
@@ -39,11 +41,16 @@ class LoginSignupForgotController
         ),
       );
     }
+
+    model.update(loading: false);
   }
 
-  Future<void> signup() async {
-    final _authService = getService<AuthService>(alias: appAlias);
-    var _result = _authService.signup(model.username, model.email, model.password);
+  Future<void> signup(String username, String email, String password) async {
+    final _authService = getService<AuthService>();
+
+    model.update(loading: true);
+
+    var _result = await _authService.signup(username, email, password);
 
     if (_result == true) {
       sendEvent(
@@ -62,18 +69,24 @@ class LoginSignupForgotController
         ),
       );
     }
+
+    model.update(loading: false);
   }
 
-  Future<void> forgotPwd() async {
-    final _authService = getService<AuthService>(alias: appAlias);
-    var _result = _authService.forgotPassword(model.email);
+  Future<void> forgotPwd(String email) async {
+    final _authService = getService<AuthService>();
+
+    model.update(loading: true);
+
+    var _result = await _authService.forgotPassword(email);
 
     if (_result == true) {
       sendEvent(
         AuthEvent(
           action: AuthEventAction.Success,
           title: 'success',
-          message: 'Password reset instructions sent successfully. Please check your email',
+          message:
+              'Password reset instructions sent successfully. Please check your email',
         ),
       );
     } else {
@@ -81,10 +94,16 @@ class LoginSignupForgotController
         AuthEvent(
           action: AuthEventAction.Fail,
           title: 'failed',
-          message: 'Failed to sent reset-password instructions to email. Please try again later',
+          message:
+              'Failed to sent reset-password instructions to email. Please try again later',
         ),
       );
     }
+
+    model.update(loading: false);
   }
 
+  Future<void> logout() async {
+    // TODO: Implement logout
+  }
 }

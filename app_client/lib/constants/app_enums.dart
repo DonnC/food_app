@@ -12,4 +12,5 @@ enum AuthEventAction {
   Success,
   Fail,
   Error,
+  ForgotPassword,
 }
