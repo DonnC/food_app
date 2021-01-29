@@ -12,3 +12,6 @@ final Color loginUpperColor = Color(0xFF151922);
 final Color loginBgColor = Color(0xFF171E28);
 final Color buttonBgColor = Color(0xFFCD3424);
 final Color textColor = Color(0xFFA0A9A5);
+final Color drawerShadowColor = Colors.blueGrey;
+final Color homePriceColor = Color(0xFFd2c622).withOpacity(0.75);
+//final Color drawerShadowColor = Color(0xFF222B3A);

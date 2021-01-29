@@ -4,6 +4,7 @@ import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/events/index.dart';
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
+import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/utils/color_themes.dart';
 import 'package:restaurant_app/widgets/index.dart';
 
@@ -42,12 +43,27 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
           case AuthEventAction.Success:
             _resetTextEditingControllers();
             MomentumRouter.clearHistoryWithContext(context);
-            // go to home page
+            MomentumRouter.goto(context, StartPage);
+            break;
+
+          case AuthEventAction.SuccessEmailSend:
+            // TODO: Implement dialog
+            _resetTextEditingControllers();
             break;
 
           case AuthEventAction.ForgotPassword:
             _resetTextEditingControllers();
             _showForgotPasswordDialog();
+            break;
+
+          case AuthEventAction.Fail:
+          // TODO: Show failed dialog
+            _resetTextEditingControllers();
+            break;
+
+          case AuthEventAction.Error:
+          // TODO: show error dialog
+            _resetTextEditingControllers();
             break;
 
           default:
@@ -146,7 +162,6 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
 
                         await _loginSignupForgotController
                             .forgotPwd(_email.text.trim());
-
                       } else {
                         _resetTextEditingControllers();
                       }

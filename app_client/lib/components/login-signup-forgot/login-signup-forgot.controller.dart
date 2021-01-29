@@ -83,7 +83,7 @@ class LoginSignupForgotController
     if (_result == true) {
       sendEvent(
         AuthEvent(
-          action: AuthEventAction.Success,
+          action: AuthEventAction.SuccessEmailSend,
           title: 'success',
           message:
               'Password reset instructions sent successfully. Please check your email',

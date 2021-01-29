@@ -13,4 +13,12 @@ enum AuthEventAction {
   Fail,
   Error,
   ForgotPassword,
+  SuccessEmailSend, // forgot password, email send successfully
+}
+
+enum HomePageEventAction {
+  // event triggered on the home page
+  None,
+  Success,
+  Error,
 }

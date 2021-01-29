@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Product {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final double price;
@@ -10,6 +10,9 @@ class Product {
   final int maxTime;
   final double votes;
   final double mass;
+  final String category;
+  final String imageUrl;
+  final String contents; // food contents
   
   Product({
     this.id,
@@ -21,10 +24,13 @@ class Product {
     this.maxTime,
     this.votes,
     this.mass,
+    this.category,
+    this.imageUrl,
+    this.contents,
   });
 
   Product copyWith({
-    String id,
+    int id,
     String name,
     String description,
     double price,
@@ -33,6 +39,9 @@ class Product {
     int maxTime,
     double votes,
     double mass,
+    String category,
+    String imageUrl,
+    String contents,
   }) {
     return Product(
       id: id ?? this.id,
@@ -44,6 +53,9 @@ class Product {
       maxTime: maxTime ?? this.maxTime,
       votes: votes ?? this.votes,
       mass: mass ?? this.mass,
+      category: category ?? this.category,
+      imageUrl: imageUrl ?? this.imageUrl,
+      contents: contents ?? this.contents,
     );
   }
 
@@ -58,6 +70,9 @@ class Product {
       'maxTime': maxTime,
       'votes': votes,
       'mass': mass,
+      'category': category,
+      'imageUrl': imageUrl,
+      'contents': contents,
     };
   }
 
@@ -74,6 +89,9 @@ class Product {
       maxTime: map['maxTime'],
       votes: map['votes'],
       mass: map['mass'],
+      category: map['category'],
+      imageUrl: map['imageUrl'],
+      contents: map['contents'],
     );
   }
 
@@ -83,7 +101,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, name: $name, description: $description, price: $price, calories: $calories, minTime: $minTime, maxTime: $maxTime, votes: $votes, mass: $mass)';
+    return 'Product(id: $id, name: $name, description: $description, price: $price, calories: $calories, minTime: $minTime, maxTime: $maxTime, votes: $votes, mass: $mass, category: $category, imageUrl: $imageUrl, contents: $contents)';
   }
 
   @override
@@ -99,6 +117,9 @@ class Product {
       o.minTime == minTime &&
       o.maxTime == maxTime &&
       o.votes == votes &&
-      o.mass == mass;
+      o.mass == mass &&
+      o.category == category &&
+      o.imageUrl == imageUrl &&
+      o.contents == contents;
   }
 }

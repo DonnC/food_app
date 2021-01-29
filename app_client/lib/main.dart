@@ -5,6 +5,9 @@ import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/services/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 
+// TODO: Contribute to scaled_animated_scaffold plugin, have PR
+// TODO: Add shimmer package
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(momentum());
@@ -16,12 +19,23 @@ Momentum momentum() => Momentum(
       child: MyApp(),
       controllers: [
         LoginSignupForgotController(),
+        HomePageController()
+          ..config(
+            enableLogging: true,
+            lazy: true,
+          ),
+        StartPageController(),
+        CartController(),
       ],
       services: [
         AuthService(),
+        ProductService(),
         MomentumRouter(
           [
             LoginSignupForgot(),
+            StartPage(),
+            HomePage(),
+            CartPage(),
           ],
         ),
       ],
