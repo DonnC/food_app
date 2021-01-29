@@ -50,6 +50,8 @@ class LoginSignupForgotController
 
     model.update(loading: true);
 
+    // FIXME: Use the [User] class model
+
     var _result = await _authService.signup(username, email, password);
 
     if (_result == true) {

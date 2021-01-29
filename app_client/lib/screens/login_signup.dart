@@ -1,11 +1,10 @@
 // login & sign up screen with popup forgot password screen
 import 'package:flutter/material.dart';
 import 'package:momentum/momentum.dart';
-import 'package:restaurant_app/components/events/index.dart';
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/screens/index.dart';
-import 'package:restaurant_app/utils/color_themes.dart';
+import 'package:restaurant_app/utils/index.dart';
 import 'package:restaurant_app/widgets/index.dart';
 
 class LoginSignupForgot extends StatefulWidget {

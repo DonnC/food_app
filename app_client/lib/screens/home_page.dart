@@ -6,6 +6,8 @@ import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 
+import 'index.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePageState();
@@ -97,7 +99,13 @@ class _HomePageState extends MomentumState<HomePage> {
             final Product p = productsPerCategory[index];
 
             return InkWell(
-              onTap: () {},
+              onTap: () => MomentumRouter.goto(
+                context,
+                ProductDetailsPage,
+                params: ProductDetailsPageParam(
+                  product: p,
+                ),
+              ),
               child: Container(
                 width: _size.width * 0.5,
                 padding: const EdgeInsets.all(15),
@@ -172,100 +180,103 @@ class _HomePageState extends MomentumState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double _w = constraints.maxWidth;
-        final double _h = constraints.maxHeight;
-        final double _chipRadius = 40;
+    return RouterPage(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final double _w = constraints.maxWidth;
+          final double _h = constraints.maxHeight;
+          final double _chipRadius = 40;
 
-        return ClipRRect(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(_chipRadius),
-            bottomRight: Radius.circular(_chipRadius),
-          ),
-          child: MomentumBuilder(
-            controllers: [HomePageController],
-            builder: (context, snapshot) {
-              final _model = snapshot<HomePageModel>();
+          return ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(_chipRadius),
+              bottomRight: Radius.circular(_chipRadius),
+            ),
+            child: MomentumBuilder(
+              controllers: [HomePageController],
+              builder: (context, snapshot) {
+                final _model = snapshot<HomePageModel>();
 
-              return Container(
-                color: Theme.of(context).primaryColor,
-                width: _w,
-                height: _h,
-                padding: const EdgeInsets.all(15),
-                child: _model.loading
-                    ? Center(
-                        // TODO: Use shimmer package
-                        child: CircularProgressIndicator(),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Fast and',
-                            style: homeTitleStyle,
-                          ),
-                          Text(
-                            'Delicious Food',
-                            style: homeTitleStyle,
-                          ),
-                          SizedBox(height: 30),
-                          Row(
-                            children: [
-                              Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                decoration: BoxDecoration(
-                                  color: loginBgColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        LineIcons.search,
-                                        color: textColor,
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'Search',
-                                        style: TextStyle(
+                return Container(
+                  color: Theme.of(context).primaryColor,
+                  width: _w,
+                  height: _h,
+                  padding: const EdgeInsets.all(15),
+                  child: _model.loading
+                      ? Center(
+                          // TODO: Use shimmer package
+                          child: CircularProgressIndicator(),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Fast and',
+                              style: homeTitleStyle,
+                            ),
+                            Text(
+                              'Delicious Food',
+                              style: homeTitleStyle,
+                            ),
+                            SizedBox(height: 30),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  decoration: BoxDecoration(
+                                    color: loginBgColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          LineIcons.search,
                                           color: textColor,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Search',
+                                          style: TextStyle(
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Spacer(),
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: buttonBgColor,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.tune,
-                                    color: textColor,
+                                Spacer(),
+                                Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: buttonBgColor,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.tune,
+                                      color: textColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 30),
-                          _buildCategoryCarousel(),
-                          SizedBox(height: 25),
-                          _buildProductList(_model),
-                        ],
-                      ),
-              );
-            },
-          ),
-        );
-      },
+                              ],
+                            ),
+                            SizedBox(height: 30),
+                            _buildCategoryCarousel(),
+                            SizedBox(height: 25),
+                            _buildProductList(_model),
+                          ],
+                        ),
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

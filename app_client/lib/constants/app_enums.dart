@@ -22,3 +22,10 @@ enum HomePageEventAction {
   Success,
   Error,
 }
+
+enum ProductDetailsEventAction {
+  // triggered on [ProductDetailsPage] view
+  None,
+  Success,
+  Error,
+}
