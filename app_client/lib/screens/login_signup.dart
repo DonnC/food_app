@@ -41,7 +41,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
         switch (event.action) {
           case AuthEventAction.Success:
             _resetTextEditingControllers();
-            MomentumRouter.clearHistoryWithContext(context);
+            MomentumRouter.resetWithContext<StartPage>(context);
             MomentumRouter.goto(context, StartPage);
             break;
 
@@ -56,12 +56,12 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
             break;
 
           case AuthEventAction.Fail:
-          // TODO: Show failed dialog
+            // TODO: Show failed dialog
             _resetTextEditingControllers();
             break;
 
           case AuthEventAction.Error:
-          // TODO: show error dialog
+            // TODO: show error dialog
             _resetTextEditingControllers();
             break;
 

@@ -22,22 +22,22 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
   }
 
   void _checkFavorite() {
-    bool _res;
-
-    final _favController = dependOn<FavoritesController>();
+    final _userController = dependOn<UserProfileController>();
 
     final Product _product = getParam<ProductDetailsPageParam>().product;
 
-    if (_favController.model.favorites == null ||
-        _favController.model.favorites.isEmpty) {
+    bool _res;
+
+    if (_userController.model.user.favorites == null ||
+        _userController.model.user.favorites.isEmpty) {
       _res = false;
     } else {
       try {
-        _favController.model.favorites
+        var _pr = _userController.model.user.favorites
             .where((favProduct) => favProduct.id == _product.id)
             .first;
 
-        _res = true;
+        _res = _pr == null ? false : true;
       } catch (StateError) {
         _res = false;
       }
@@ -46,12 +46,18 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
     model.update(isFavorite: _res);
   }
 
-  void _removeFavorite() {
-    final _favController = dependOn<FavoritesController>();
+  void toggleFavorite() {
+    _checkFavorite();
+
+    final _userController = dependOn<UserProfileController>();
 
     final Product _product = getParam<ProductDetailsPageParam>().product;
 
-    _favController.deleteFavorite(_product);
+    if (model.isFavorite) {
+      _userController.removeFromFavorites(_product);
+    } else {
+      _userController.addToFavorites(_product);
+    }
 
     _checkFavorite();
   }
@@ -93,37 +99,5 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
         message: 'product added to cart successfully',
       ),
     );
-  }
-
-  void addToFavorites() {
-    final _favController = dependOn<FavoritesController>();
-
-    final Product _product = getParam<ProductDetailsPageParam>().product;
-
-    // toggle favorite model
-    _checkFavorite();
-
-    if (model.isFavorite) {
-      _removeFavorite();
-
-      sendEvent(
-        ProductDetailsEvent(
-          action: ProductDetailsEventAction.Success,
-          message: 'product successfully removed from your favorites',
-        ),
-      );
-    }
-
-    // add to cart
-    else {
-      _favController.addToFavorites(_product);
-
-      sendEvent(
-        ProductDetailsEvent(
-          action: ProductDetailsEventAction.Success,
-          message: 'product successfully added to your favorites',
-        ),
-      );
-    }
   }
 }

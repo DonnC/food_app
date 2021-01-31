@@ -1,5 +1,13 @@
 // DonnC
 
+/// response action from [AuthService] service
+enum AuthResponseAction {
+  None,
+  Success,
+  Fail,
+  Error,
+}
+
 enum AppServiceAlias {
   FAKE, // emulate fake services
   ACTUAL, // real api service

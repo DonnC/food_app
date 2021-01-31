@@ -145,7 +145,7 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
                                                           GestureDetector(
                                                             onTap: () => _model
                                                                 .controller
-                                                                .addToFavorites(),
+                                                                .toggleFavorite(),
                                                             child: Container(
                                                               height: 40,
                                                               width: 40,

@@ -14,7 +14,7 @@ class StartPage extends StatelessWidget {
 
   static List<Widget> _appScreens = <Widget>[
     HomePage(),
-    HomePage(),
+    FavoritesPage(),
     HomePage(),
     CartPage(),
   ];
@@ -68,7 +68,10 @@ class StartPage extends StatelessWidget {
                           color: textColor,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => _model.update(
+                        selectedPageIndex: 1,
+                        appBarTitle: 'My Favorites',
+                      ),
                     ),
                     SizedBox(height: _spacer),
                     ScaledAnimatedScaffoldMenuButton(

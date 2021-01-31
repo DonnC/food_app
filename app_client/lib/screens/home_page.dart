@@ -5,8 +5,7 @@ import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
 import 'package:restaurant_app/utils/index.dart';
-
-import 'index.dart';
+import 'package:restaurant_app/widgets/index.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -83,7 +82,6 @@ class _HomePageState extends MomentumState<HomePage> {
   }
 
   Widget _buildProductList(HomePageModel model) {
-    final _size = MediaQuery.of(context).size;
 
     final List<Product> _products = model.products;
     var productsPerCategory = _products
@@ -98,77 +96,10 @@ class _HomePageState extends MomentumState<HomePage> {
           itemBuilder: (context, index) {
             final Product p = productsPerCategory[index];
 
-            return InkWell(
-              onTap: () => MomentumRouter.goto(
-                context,
-                ProductDetailsPage,
-                params: ProductDetailsPageParam(
-                  product: p,
-                ),
-              ),
-              child: Container(
-                width: _size.width * 0.5,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: loginBgColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Center(
-                        child: Image.asset(
-                          p.imageUrl,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      p.name,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      p.contents,
-                      style: TextStyle(
-                        color: textColor,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(
-                          '\$${(p.price).toStringAsFixed(2)}',
-                          style: TextStyle(
-                            color: homePriceColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
-                          ),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () =>
-                              _cartController.addToCart(Cart(product: p)),
-                          child: CircleAvatar(
-                            backgroundColor: buttonBgColor,
-                            child: Center(
-                              child: Icon(
-                                LineIcons.shopping_cart,
-                                color: Colors.white70,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            return productContainer(
+              context: context,
+              product: p,
+              cartController: _cartController,
             );
           },
           separatorBuilder: (ctx, x) => SizedBox(width: 25),

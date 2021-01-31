@@ -25,6 +25,19 @@ class User {
     this.notifications,
   });
 
+  /// get default user for [UserProfileController] persistence
+  static User get defaultEmptyUser => User(
+        id: 0,
+        username: '',
+        email: '',
+        address: '',
+        contact: '',
+        paymentMethod: '',
+        favorites: List<Product>.empty(growable: true),
+        orders: List<Order>.empty(growable: true),
+        notifications: List<Notification>.empty(growable: true),
+      );
+
   User copyWith({
     int id,
     String username,
@@ -65,7 +78,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return User(
       id: map['id'],
       username: map['username'],
@@ -73,9 +86,11 @@ class User {
       address: map['address'],
       contact: map['contact'],
       paymentMethod: map['paymentMethod'],
-      favorites: List<Product>.from(map['favorites']?.map((x) => Product.fromMap(x))),
+      favorites:
+          List<Product>.from(map['favorites']?.map((x) => Product.fromMap(x))),
       orders: List<Order>.from(map['orders']?.map((x) => Order.fromMap(x))),
-      notifications: List<Notification>.from(map['notifications']?.map((x) => Notification.fromMap(x))),
+      notifications: List<Notification>.from(
+          map['notifications']?.map((x) => Notification.fromMap(x))),
     );
   }
 
@@ -87,5 +102,4 @@ class User {
   String toString() {
     return 'User(id: $id, username: $username, email: $email, address: $address, contact: $contact, paymentMethod: $paymentMethod, favorites: $favorites, orders: $orders, notifications: $notifications)';
   }
-
 }

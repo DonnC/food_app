@@ -19,6 +19,7 @@ Momentum momentum() => Momentum(
       child: MyApp(),
       controllers: [
         LoginSignupForgotController(),
+        UserProfileController(),
         StartPageController(),
         HomePageController()
           ..config(
@@ -29,10 +30,10 @@ Momentum momentum() => Momentum(
           ..config(
             lazy: true,
           ),
-        FavoritesController(),
       ],
       services: [
         AuthService(),
+        UserService(),
         ProductService(),
         MomentumRouter(
           [
@@ -40,6 +41,7 @@ Momentum momentum() => Momentum(
             StartPage(),
             HomePage(),
             CartPage(),
+            FavoritesPage(),
             ProductDetailsPage(),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:momentum/momentum.dart';
-import 'package:restaurant_app/components/events/index.dart';
+import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
+import 'package:restaurant_app/models/index.dart';
 import 'package:restaurant_app/services/index.dart';
 
 import 'index.dart';
@@ -18,58 +19,73 @@ class LoginSignupForgotController
   }
 
   Future<void> login(String email, String password) async {
+    final _userController = dependOn<UserProfileController>();
     final _authService = getService<AuthService>();
 
     model.update(loading: true);
 
-    var _result = await _authService.login(email, password);
+    AuthResponse _response = await _authService.login(email, password);
 
-    if (_result == true) {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.Success,
-          title: 'success',
-          message: 'login successful',
-        ),
-      );
-    } else {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.Fail,
-          title: 'failed',
-          message: 'Failed to login. Please try again later',
-        ),
-      );
+    switch (_response.action) {
+      case AuthResponseAction.Success:
+        // update user controller on successful login
+        _userController.saveCurrentUser(_response.data);
+
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.Success,
+            title: 'success',
+            message: _response.message,
+          ),
+        );
+        break;
+
+      case AuthResponseAction.Fail:
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.Fail,
+            message: _response.message,
+          ),
+        );
+        break;
+      default:
     }
 
     model.update(loading: false);
   }
 
   Future<void> signup(String username, String email, String password) async {
+    final _userController = dependOn<UserProfileController>();
+
     final _authService = getService<AuthService>();
 
     model.update(loading: true);
 
-    // FIXME: Use the [User] class model
+    AuthResponse _response =
+        await _authService.signup(username, email, password);
 
-    var _result = await _authService.signup(username, email, password);
+    switch (_response.action) {
+      case AuthResponseAction.Success:
+        // update user controller on successful signup
+        _userController.saveCurrentUser(_response.data);
 
-    if (_result == true) {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.Success,
-          title: 'success',
-          message: 'signup successful',
-        ),
-      );
-    } else {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.Fail,
-          title: 'failed',
-          message: 'Failed to create account. Please try again later',
-        ),
-      );
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.Success,
+            message: _response.message,
+          ),
+        );
+        break;
+
+      case AuthResponseAction.Fail:
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.Fail,
+            message: _response.message,
+          ),
+        );
+        break;
+      default:
     }
 
     model.update(loading: false);
@@ -80,26 +96,27 @@ class LoginSignupForgotController
 
     model.update(loading: true);
 
-    var _result = await _authService.forgotPassword(email);
+    AuthResponse _response = await _authService.forgotPassword(email);
 
-    if (_result == true) {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.SuccessEmailSend,
-          title: 'success',
-          message:
-              'Password reset instructions sent successfully. Please check your email',
-        ),
-      );
-    } else {
-      sendEvent(
-        AuthEvent(
-          action: AuthEventAction.Fail,
-          title: 'failed',
-          message:
-              'Failed to sent reset-password instructions to email. Please try again later',
-        ),
-      );
+    switch (_response.action) {
+      case AuthResponseAction.Success:
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.SuccessEmailSend,
+            message: _response.message,
+          ),
+        );
+        break;
+
+      case AuthResponseAction.Fail:
+        sendEvent(
+          AuthEvent(
+            action: AuthEventAction.Fail,
+            message: _response.message,
+          ),
+        );
+        break;
+      default:
     }
 
     model.update(loading: false);

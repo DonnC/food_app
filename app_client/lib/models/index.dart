@@ -4,3 +4,4 @@ export 'cart.dart';
 export 'user.dart';
 export 'order.dart';
 export 'notification.dart';
+export 'auth_response.dart';
