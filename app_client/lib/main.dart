@@ -19,7 +19,10 @@ Momentum momentum() => Momentum(
       child: MyApp(),
       controllers: [
         LoginSignupForgotController(),
-        UserProfileController(),
+        UserProfileController()
+          ..config(
+            lazy: true,
+          ),
         StartPageController(),
         HomePageController()
           ..config(
@@ -30,6 +33,7 @@ Momentum momentum() => Momentum(
           ..config(
             lazy: true,
           ),
+        ProfilePageController(),
       ],
       services: [
         AuthService(),
@@ -43,6 +47,8 @@ Momentum momentum() => Momentum(
             CartPage(),
             FavoritesPage(),
             ProductDetailsPage(),
+            NotificationPage(),
+            ProfilePage(),
           ],
         ),
       ],

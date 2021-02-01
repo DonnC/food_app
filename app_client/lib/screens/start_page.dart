@@ -10,12 +10,14 @@ import 'package:restaurant_app/utils/index.dart';
 import 'package:restaurant_app/widgets/index.dart';
 
 class StartPage extends StatelessWidget {
+  final GlobalKey<ScaledAnimatedScaffoldState> _key =
+      GlobalKey<ScaledAnimatedScaffoldState>();
   final double _spacer = 20.0;
 
   static List<Widget> _appScreens = <Widget>[
     HomePage(),
     FavoritesPage(),
-    HomePage(),
+    NotificationPage(),
     CartPage(),
   ];
 
@@ -29,6 +31,7 @@ class StartPage extends StatelessWidget {
 
           return SafeArea(
             child: ScaledAnimatedScaffold(
+              key: _key,
               backgroundColor: loginBgColor,
               layerColor: Theme.of(context).primaryColor.withOpacity(0.7),
               appBar: ScaledAnimatedScaffoldAppBar(
@@ -54,6 +57,30 @@ class StartPage extends StatelessWidget {
               ),
               menuConfiguration: ScaledAnimatedScaffoldMenuConfiguration(
                 backgroundColor: loginUpperColor.withOpacity(0.8),
+                header: Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => _key.currentState.toggleMenu(),
+                      child: Container(
+                        height: 40,
+                        width: 45,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            LineIcons.close,
+                            size: 17,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                  ],
+                ),
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -68,10 +95,13 @@ class StartPage extends StatelessWidget {
                           color: textColor,
                         ),
                       ),
-                      onPressed: () => _model.update(
-                        selectedPageIndex: 1,
-                        appBarTitle: 'My Favorites',
-                      ),
+                      onPressed: () {
+                        _key.currentState.toggleMenu();
+                        _model.update(
+                          selectedPageIndex: 1,
+                          appBarTitle: 'My Favorites',
+                        );
+                      },
                     ),
                     SizedBox(height: _spacer),
                     ScaledAnimatedScaffoldMenuButton(

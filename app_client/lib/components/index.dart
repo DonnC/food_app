@@ -7,3 +7,4 @@ export 'product-details/index.dart';
 export 'router-params/index.dart';
 export 'start-page/index.dart';
 export 'user-profile/index.dart';
+export 'profile-page/index.dart';

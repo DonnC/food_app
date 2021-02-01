@@ -1,32 +1,29 @@
 import 'dart:convert';
 
-import 'index.dart';
-
 class Notification {
-  final Order order;
+  //final Order order;            // notification usually goes hand in hand with a particular order
   final int points;
+  final DateTime notifiedOn;
 
   Notification({
-    this.order,
-    this.points: 0,
+    this.points,
+    this.notifiedOn,
   });
 
- 
-
   Notification copyWith({
-    Order order,
     int points,
+    DateTime notifiedOn,
   }) {
     return Notification(
-      order: order ?? this.order,
       points: points ?? this.points,
+      notifiedOn: notifiedOn ?? this.notifiedOn,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'order': order?.toMap(),
       'points': points,
+      'notifiedOn': notifiedOn?.millisecondsSinceEpoch,
     };
   }
 
@@ -34,8 +31,8 @@ class Notification {
     if (map == null) return null;
   
     return Notification(
-      order: Order.fromMap(map['order']),
       points: map['points'],
+      notifiedOn: DateTime.fromMillisecondsSinceEpoch(map['notifiedOn']),
     );
   }
 
@@ -44,5 +41,6 @@ class Notification {
   factory Notification.fromJson(String source) => Notification.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Notification(order: $order, points: $points)';
+  String toString() => 'Notification(points: $points, notifiedOn: $notifiedOn)';
+
 }

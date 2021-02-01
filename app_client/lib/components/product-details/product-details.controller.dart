@@ -99,5 +99,8 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
         message: 'product added to cart successfully',
       ),
     );
+
+    // reset cart counter
+    model.update(cartProductCounter: 1);
   }
 }

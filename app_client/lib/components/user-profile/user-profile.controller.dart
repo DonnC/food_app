@@ -13,6 +13,14 @@ class UserProfileController extends MomentumController<UserProfileModel> {
     );
   }
 
+  @override
+  void bootstrap() {
+    // load dummy data on first call
+    model.update(
+      user: User.defaultEmptyUser,
+    );
+  }
+
   void saveCurrentUser(User user) {
     model.update(user: user);
   }

@@ -35,7 +35,37 @@ class User {
         paymentMethod: '',
         favorites: List<Product>.empty(growable: true),
         orders: List<Order>.empty(growable: true),
-        notifications: List<Notification>.empty(growable: true),
+        //notifications: List<Notification>.empty(growable: true),
+        notifications: <Notification>[
+          Notification(
+            points: 20,
+            notifiedOn: DateTime(2021, 2, 1, 10, 30),
+          ),
+          Notification(
+            points: 30,
+            notifiedOn: DateTime.now(),
+          ),
+          Notification(
+            points: 70,
+            notifiedOn: DateTime(2021, 1, 2, 10, 30),
+          ),
+          Notification(
+            points: 20,
+            notifiedOn: DateTime(2021, 1, 3, 17, 23),
+          ),
+          Notification(
+            points: 10,
+            notifiedOn: DateTime(2021, 1, 5, 07, 30),
+          ),
+          Notification(
+            points: 17,
+            notifiedOn: DateTime(2021, 1, 13, 14, 37),
+          ),
+          Notification(
+            points: 57,
+            notifiedOn: DateTime(2021, 1, 25, 18, 12),
+          ),
+        ],
       );
 
   User copyWith({
