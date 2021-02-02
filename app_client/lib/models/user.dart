@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'index.dart';
 
 class User {
-  final int id;
-  final String username;
-  final String email;
-  final String address;
-  final String contact;
-  final String paymentMethod; // FIXME: fix type
-  final List<Product> favorites;
-  final List<Order> orders;
-  final List<Notification> notifications;
+  int id;
+  String username;
+  String email;
+  String address;
+  String contact;
+  String paymentMethod; // FIXME: fix type
+  List<Product> favorites;
+  List<Order> orders;
+  List<Notification> notifications;
 
   User({
     this.id,
@@ -28,11 +28,11 @@ class User {
   /// get default user for [UserProfileController] persistence
   static User get defaultEmptyUser => User(
         id: 0,
-        username: '',
-        email: '',
-        address: '',
-        contact: '',
-        paymentMethod: '',
+        username: 'DonnC Lab',
+        email: 'donnclab@gmail.com',
+        address: 'Harare, Zimbabwe',
+        contact: '0778 060 126',
+        paymentMethod: 'Credit Card, Ecocash',
         favorites: List<Product>.empty(growable: true),
         orders: List<Order>.empty(growable: true),
         //notifications: List<Notification>.empty(growable: true),

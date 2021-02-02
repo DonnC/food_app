@@ -1,4 +1,6 @@
 // login & sign up screen with popup forgot password screen
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
@@ -98,7 +100,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
             Spacer(),
             GestureDetector(
               onTap: () {
-                _loginSignupForgotController.model.update(opacity: 1.0);
+                _loginSignupForgotController.model.update(opacity: 0.0);
                 _resetTextEditingControllers();
                 Navigator.pop(context);
               },
@@ -155,7 +157,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
                     onPressed: () async {
                       if (_forgotpwdFormKey.currentState.validate()) {
                         // dismiss forgot pwd dialog first
-                        _loginSignupForgotController.model.update(opacity: 1.0);
+                        _loginSignupForgotController.model.update(opacity: 0.0);
 
                         Navigator.pop(context);
 
@@ -218,8 +220,11 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
                       )
                     : Form(
                         key: _loginSignupFormKey,
-                        child: Opacity(
-                          opacity: _loginModel.opacity,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: _loginModel.opacity,
+                            sigmaY: _loginModel.opacity,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -376,7 +381,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
                                   ? Center(
                                       child: GestureDetector(
                                         onTap: () {
-                                          _loginModel.update(opacity: 0.2);
+                                          _loginModel.update(opacity: 1.2);
 
                                           _loginModel.controller.sendEvent(
                                             AuthEvent(

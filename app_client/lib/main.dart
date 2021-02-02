@@ -49,6 +49,7 @@ Momentum momentum() => Momentum(
             ProductDetailsPage(),
             NotificationPage(),
             ProfilePage(),
+            OrderPaymentPage(),
           ],
         ),
       ],

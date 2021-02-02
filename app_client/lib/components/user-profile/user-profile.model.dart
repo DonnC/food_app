@@ -8,23 +8,28 @@ class UserProfileModel extends MomentumModel<UserProfileController> {
   UserProfileModel(
     UserProfileController controller, {
     this.user,
+    this.loading,
   }) : super(controller);
 
   final User user;
+  final bool loading;
 
   @override
   void update({
     User user,
+    bool loading,
   }) {
     UserProfileModel(
       controller,
       user: user ?? this.user,
+      loading: loading ?? this.loading,
     ).updateMomentum();
   }
 
   Map<String, dynamic> toJson() {
     return {
       'user': user?.toMap(),
+      'loading': loading,
     };
   }
 
@@ -34,6 +39,7 @@ class UserProfileModel extends MomentumModel<UserProfileController> {
     return UserProfileModel(
       controller,
       user: User.fromMap(map['user']),
+      loading: map['loading'],
     );
   }
 }

@@ -14,7 +14,7 @@ class LoginSignupForgotController
       this,
       loading: false,
       isLoginSelected: true,
-      opacity: 1.0,
+      opacity: 0.0,         // sigmaX & Y for blurring background widget
     );
   }
 

@@ -10,6 +10,7 @@ class UserProfileController extends MomentumController<UserProfileModel> {
     return UserProfileModel(
       this,
       user: User.defaultEmptyUser,
+      loading: false,
     );
   }
 
@@ -30,7 +31,13 @@ class UserProfileController extends MomentumController<UserProfileModel> {
     // call userService to update user on backend
     final _service = getService<UserService>();
 
+    model.update(loading: true);
+
     await _service.updateUser(model.user);
+
+    // TODO: send event on successful update
+
+    model.update(loading: false);
   }
 
   Future<void> deleteUser() async {
@@ -44,8 +51,7 @@ class UserProfileController extends MomentumController<UserProfileModel> {
 
     model.update();
 
-    // TODO: call saveUserProfileChanges to save changes permanently
-    // saveUserProfileChanges();
+    saveUserProfileChanges();
   }
 
   void removeFromFavorites(Product product) {
@@ -54,7 +60,6 @@ class UserProfileController extends MomentumController<UserProfileModel> {
 
     model.update();
 
-    // TODO: save changes to backend api
-    // saveUserProfileChanges();
+    saveUserProfileChanges();
   }
 }

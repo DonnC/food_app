@@ -52,7 +52,32 @@ class StartPage extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  CircleAvatar(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5,
+                      right: 15,
+                      bottom: 5,
+                    ),
+                    child: GestureDetector(
+                      onTap: () => MomentumRouter.goto(
+                        context,
+                        ProfilePage,
+                      ),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            // FIXME: Add network image
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/fire.png'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               menuConfiguration: ScaledAnimatedScaffoldMenuConfiguration(

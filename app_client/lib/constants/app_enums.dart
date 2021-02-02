@@ -37,3 +37,12 @@ enum ProductDetailsEventAction {
   Success,
   Error,
 }
+
+enum ProfileEditField {
+  // used to know which field is edited
+  None,
+  Contact,
+  Email,
+  PaymentMethod,
+  Address,
+}
