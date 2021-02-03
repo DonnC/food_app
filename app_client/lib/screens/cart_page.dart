@@ -5,6 +5,8 @@ import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/models/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 
+import 'index.dart';
+
 // TODO: Add time travel for undo and forward on delete cart product
 
 class CartPage extends StatelessWidget {
@@ -194,21 +196,24 @@ class CartPage extends StatelessWidget {
                           ],
                         ),
                         Spacer(),
-                        FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          minWidth: _w * 0.5,
-                          height: 45,
-                          color: buttonBgColor,
-                          onPressed: () {},
-                          child: Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        _model.cart.isEmpty
+                            ? SizedBox()
+                            : FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                minWidth: _w * 0.5,
+                                height: 45,
+                                color: buttonBgColor,
+                                onPressed: () => MomentumRouter.goto(
+                                    context, OrderPaymentPage),
+                                child: Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),

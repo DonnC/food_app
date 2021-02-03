@@ -41,7 +41,7 @@ Widget profileRow({
             subtitle,
             style: TextStyle(
               fontSize: 17,
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withOpacity(0.8),
             ),
           ),
         ],

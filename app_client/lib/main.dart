@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:momentum/momentum.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/services/index.dart';
@@ -16,24 +18,27 @@ void main() {
 Momentum momentum() => Momentum(
       key: UniqueKey(),
       restartCallback: main,
+      enableLogging: true, // FIXME: debugging - disable
       child: MyApp(),
+      persistSave: (context, key, value) async {
+        final sharedPref = await SharedPreferences.getInstance();
+        var result = await sharedPref.setString(key, value);
+        return result;
+      },
+      persistGet: (context, key) async {
+        final sharedPref = await SharedPreferences.getInstance();
+        var result = sharedPref.getString(key);
+        return result;
+      },
       controllers: [
         LoginSignupForgotController(),
-        UserProfileController()
-          ..config(
-            lazy: true,
-          ),
-        StartPageController(),
-        HomePageController()
-          ..config(
-            lazy: true,
-          ),
-        CartController(),
-        ProductDetailsController()
-          ..config(
-            lazy: true,
-          ),
         ProfilePageController(),
+        CartController(),
+        StartPageController(),
+        OrderPageController(),
+        UserProfileController()..config(lazy: true),
+        HomePageController()..config(lazy: true),
+        ProductDetailsController()..config(lazy: true),
       ],
       services: [
         AuthService(),

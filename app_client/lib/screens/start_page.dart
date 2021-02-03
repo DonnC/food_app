@@ -252,6 +252,7 @@ class StartPage extends StatelessWidget {
                               : textColor,
                         ),
                       ),
+                      // TODO: Add notification badge
                       GestureDetector(
                         onTap: () => _model.update(
                           selectedPageIndex: 2,
@@ -264,6 +265,7 @@ class StartPage extends StatelessWidget {
                               : textColor,
                         ),
                       ),
+                      // TODO: Add cart badge
                       GestureDetector(
                         onTap: () => _model.update(
                           selectedPageIndex: 3,

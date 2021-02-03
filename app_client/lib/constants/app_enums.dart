@@ -46,3 +46,9 @@ enum ProfileEditField {
   PaymentMethod,
   Address,
 }
+
+enum PaymentMethods {
+  CreditCard,
+  Paypal,
+  GooglePay,
+}

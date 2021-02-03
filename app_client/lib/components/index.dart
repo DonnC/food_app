@@ -8,3 +8,4 @@ export 'router-params/index.dart';
 export 'start-page/index.dart';
 export 'user-profile/index.dart';
 export 'profile-page/index.dart';
+export 'order-page/index.dart';

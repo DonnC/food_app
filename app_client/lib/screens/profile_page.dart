@@ -29,7 +29,34 @@ class _ProfilePageState extends MomentumState<ProfilePage> {
     // TODO: listen to profile change event
   }
 
+  void _setTextControllerInitField(ProfileEditField field) {
+    var value;
+
+    switch (field) {
+      case ProfileEditField.Contact:
+        value = _userProfileController.model.user.contact;
+        break;
+
+      case ProfileEditField.Email:
+        value = _userProfileController.model.user.email;
+        break;
+
+      case ProfileEditField.PaymentMethod:
+        value = _userProfileController.model.user.paymentMethod;
+        break;
+
+      case ProfileEditField.Address:
+        value = _userProfileController.model.user.address;
+        break;
+      default:
+    }
+
+    _textEditingController.text = value ?? '';
+  }
+
   _showEditFieldDialog(ProfileEditField field, String title) {
+    _setTextControllerInitField(field);
+
     return showDialog(
       context: context,
       barrierDismissible: false,
