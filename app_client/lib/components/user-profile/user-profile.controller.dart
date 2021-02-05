@@ -29,7 +29,7 @@ class UserProfileController extends MomentumController<UserProfileModel> {
   Future<void> saveUserProfileChanges() async {
     // commit changes permanently to api user backend
     // call userService to update user on backend
-    final _service = getService<UserService>();
+    final _service = service<UserService>();
 
     model.update(loading: true);
 
@@ -41,7 +41,7 @@ class UserProfileController extends MomentumController<UserProfileModel> {
   }
 
   Future<void> deleteUser() async {
-    final _service = getService<UserService>();
+    final _service = service<UserService>();
 
     await _service.deleteUser(model.user);
   }
@@ -51,7 +51,7 @@ class UserProfileController extends MomentumController<UserProfileModel> {
 
     model.update();
 
-    saveUserProfileChanges();
+    //saveUserProfileChanges();
   }
 
   void removeFromFavorites(Product product) {
@@ -60,6 +60,6 @@ class UserProfileController extends MomentumController<UserProfileModel> {
 
     model.update();
 
-    saveUserProfileChanges();
+    //saveUserProfileChanges();
   }
 }

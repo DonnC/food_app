@@ -82,7 +82,6 @@ class _HomePageState extends MomentumState<HomePage> {
   }
 
   Widget _buildProductList(HomePageModel model) {
-
     final List<Product> _products = model.products;
     var productsPerCategory = _products
         .where((product) => product.category == categories[model.selectedIndex])
@@ -134,10 +133,7 @@ class _HomePageState extends MomentumState<HomePage> {
                   height: _h,
                   padding: const EdgeInsets.all(15),
                   child: _model.loading
-                      ? Center(
-                          // TODO: Use shimmer package
-                          child: CircularProgressIndicator(),
-                        )
+                      ? homePageLoader(context: context)
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

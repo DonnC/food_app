@@ -21,24 +21,30 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
     _checkFavorite();
   }
 
+  void checkFav() => _checkFavorite();
+
   void _checkFavorite() {
-    final _userController = dependOn<UserProfileController>();
+    final _userController = controller<UserProfileController>();
 
     final Product _product = getParam<ProductDetailsPageParam>().product;
 
-    bool _res;
+    bool _res = false;
 
     if (_userController.model.user.favorites == null ||
         _userController.model.user.favorites.isEmpty) {
       _res = false;
-    } else {
-      try {
-        var _pr = _userController.model.user.favorites
-            .where((favProduct) => favProduct.id == _product.id)
-            .first;
+    }
 
-        _res = _pr == null ? false : true;
-      } catch (StateError) {
+    // check if in fav list
+    else {
+      try {
+        for (var favProduct in _userController.model.user.favorites) {
+          if (favProduct.id == _product.id) {
+            _res = true;
+            print('----- product in fav: ${_product.id}');
+          }
+        }
+      } catch (e) {
         _res = false;
       }
     }
@@ -47,9 +53,7 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
   }
 
   void toggleFavorite() {
-    _checkFavorite();
-
-    final _userController = dependOn<UserProfileController>();
+    final _userController = controller<UserProfileController>();
 
     final Product _product = getParam<ProductDetailsPageParam>().product;
 
@@ -81,7 +85,7 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
 
   void addToCart() {
     // dependency injection to grab [CartController]
-    final _cartController = dependOn<CartController>();
+    final _cartController = controller<CartController>();
 
     // grab product passed as parameter to this controller's view
     final Product _product = getParam<ProductDetailsPageParam>().product;

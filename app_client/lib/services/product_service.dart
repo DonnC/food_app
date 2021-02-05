@@ -1,25 +1,26 @@
 import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/models/index.dart';
+import 'package:restaurant_app/utils/index.dart';
 
 // product service to make api calls to backend
 class ProductService extends MomentumService {
   Future<List<Product>> fetchAllProducts() async {
     await Future.delayed(Duration(seconds: 5));
-    
+
     return List<Product>.generate(
-      10,
+      30,
       (index) => Product(
-        calories: 130,
-        id: index,
+        calories: generateCalories(),
+        id: generateId(),
         name: 'Sake Roll',
         description:
             'Sake is produced by a leavening process and converting starch into sugar. It may sound simple but the entire process can take a few months',
-        price: 14.50,
-        minTime: 15,
-        maxTime: 20,
-        votes: 4.9,
-        mass: 350,
-        category: 'Sushi',
+        price: generatePrice(),
+        minTime: generateTime(),
+        maxTime: generateTime(),
+        votes: generateVotes(),
+        mass: generateMass(),
+        category: generateCategory(),
         imageUrl: 'assets/images/fire.png',
         contents: 'Kinoa, kani, avocado',
       ),
@@ -32,17 +33,17 @@ class ProductService extends MomentumService {
     return List<Product>.generate(
       7,
       (index) => Product(
-        calories: 130,
-        id: index,
+        calories: generateCalories(),
+        id: generateId(),
         name: 'Sake Roll',
         description:
             'Sake is produced by a leavening process and converting starch into sugar. It may sound simple but the entire process can take a few months',
-        price: 14.50,
-        minTime: 15,
-        maxTime: 20,
-        votes: 4.9,
-        mass: 350,
-        category: category,
+        price: generatePrice(),
+        minTime: generateTime(),
+        maxTime: generateTime(),
+        votes: generateVotes(),
+        mass: generateMass(),
+        category: generateCategory(),
         imageUrl: 'assets/images/fire.png',
         contents: 'Kinoa, kani, avocado',
       ),
@@ -53,17 +54,17 @@ class ProductService extends MomentumService {
     await Future.delayed(Duration(seconds: 5));
 
     return Product(
-      calories: 130,
-      id: id,
+      calories: generateCalories(),
+      id: generateId(),
       name: 'Sake Roll',
       description:
           'Sake is produced by a leavening process and converting starch into sugar. It may sound simple but the entire process can take a few months',
-      price: 14.50,
-      minTime: 15,
-      maxTime: 20,
-      votes: 4.9,
-      mass: 350,
-      category: 'Sushi',
+      price: generatePrice(),
+      minTime: generateTime(),
+      maxTime: generateTime(),
+      votes: generateVotes(),
+      mass: generateMass(),
+      category: generateCategory(),
       imageUrl: 'assets/images/fire.png',
       contents: 'Kinoa, kani, avocado',
     );

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
@@ -25,9 +26,13 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RouterPage(
       child: MomentumBuilder(
-        controllers: [StartPageController],
+        controllers: [
+          StartPageController,
+          CartController,
+        ],
         builder: (context, snapshot) {
           final _model = snapshot<StartPageModel>();
+          final _cartModel = snapshot<CartModel>();
 
           return SafeArea(
             child: ScaledAnimatedScaffold(
@@ -43,7 +48,7 @@ class StartPage extends StatelessWidget {
                   Spacer(),
                   Center(
                     child: Text(
-                      _model.appBarTitle,
+                      '${_model.appBarTitle ?? ''}',
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 20,
@@ -52,32 +57,51 @@ class StartPage extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                      right: 15,
-                      bottom: 5,
-                    ),
-                    child: GestureDetector(
-                      onTap: () => MomentumRouter.goto(
-                        context,
-                        ProfilePage,
-                      ),
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            // FIXME: Add network image
-                            fit: BoxFit.contain,
-                            image: AssetImage('assets/images/fire.png'),
+                  _model.selectedPageIndex == 3
+                      // Show undo & redo buttons when on cart-page
+                      ? Container(
+                          child: Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.undo),
+                                onPressed: () =>
+                                    _cartModel.controller.undoDelete(),
+                              ),
+                              SizedBox(width: 15),
+                              IconButton(
+                                icon: Icon(Icons.redo),
+                                onPressed: () =>
+                                    _cartModel.controller.redoDelete(),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                            top: 5,
+                            right: 15,
+                            bottom: 5,
+                          ),
+                          child: GestureDetector(
+                            onTap: () => MomentumRouter.goto(
+                              context,
+                              ProfilePage,
+                            ),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                image: DecorationImage(
+                                  // FIXME: Add user profile image
+                                  fit: BoxFit.contain,
+                                  image: AssetImage('assets/images/fire.png'),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
               menuConfiguration: ScaledAnimatedScaffoldMenuConfiguration(
@@ -252,7 +276,6 @@ class StartPage extends StatelessWidget {
                               : textColor,
                         ),
                       ),
-                      // TODO: Add notification badge
                       GestureDetector(
                         onTap: () => _model.update(
                           selectedPageIndex: 2,
@@ -265,17 +288,25 @@ class StartPage extends StatelessWidget {
                               : textColor,
                         ),
                       ),
-                      // TODO: Add cart badge
                       GestureDetector(
                         onTap: () => _model.update(
                           selectedPageIndex: 3,
                           appBarTitle: 'My Cart',
                         ),
-                        child: Icon(
-                          LineIcons.shopping_cart,
-                          color: _model.selectedPageIndex == 3
-                              ? buttonBgColor
-                              : textColor,
+                        child: Badge(
+                          showBadge: _cartModel.cart.isEmpty ? false : true,
+                          badgeContent: Text(
+                            '${_cartModel.cart.length}',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: Icon(
+                            LineIcons.shopping_cart,
+                            color: _model.selectedPageIndex == 3
+                                ? buttonBgColor
+                                : textColor,
+                          ),
                         ),
                       ),
                     ],

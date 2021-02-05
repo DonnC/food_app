@@ -7,8 +7,6 @@ import 'package:restaurant_app/utils/index.dart';
 
 import 'index.dart';
 
-// TODO: Add time travel for undo and forward on delete cart product
-
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,6 +18,7 @@ class CartPage extends StatelessWidget {
           final double _chipRadius = 40;
 
           return MomentumBuilder(
+            //dontRebuildIf: (controller, isTimeTravel) => !isTimeTravel,
             controllers: [CartController],
             builder: (context, snapshot) {
               final _model = snapshot<CartModel>();

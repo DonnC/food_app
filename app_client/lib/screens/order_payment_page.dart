@@ -73,217 +73,225 @@ class _OrderPaymentPageState extends MomentumState<OrderPaymentPage> {
                                         ],
                                       ),
                                     )
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 15,
-                                            right: 15,
-                                            top: 10,
-                                          ),
-                                          child: Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () =>
-                                                      MomentumRouter.pop(
-                                                          context),
-                                                  child: Container(
-                                                    height: 40,
-                                                    width: 40,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      color: loginBgColor,
-                                                    ),
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons.chevron_left,
-                                                        color: textColor,
+                                  : SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 15,
+                                              right: 15,
+                                              top: 10,
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () =>
+                                                        MomentumRouter.pop(
+                                                            context),
+                                                    child: Container(
+                                                      height: 40,
+                                                      width: 40,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        color: loginBgColor,
+                                                      ),
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.chevron_left,
+                                                          color: textColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
+                                                  SizedBox(width: _w * 0.2),
+                                                  Text(
+                                                    'Payment',
+                                                    style: TextStyle(
+                                                      color: Colors.white70,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(25),
+                                            child: ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemBuilder:
+                                                  (context, int index) {
+                                                final PaymentMethodModel _pm =
+                                                    PaymentMethodModel
+                                                            .orderPaymentMethods[
+                                                        index];
+
+                                                return GestureDetector(
+                                                  onTap: () =>
+                                                      _orderModel.update(
+                                                    payMethod:
+                                                        _pm.paymentMethod,
+                                                  ),
+                                                  child: Container(
+                                                    height: 50,
+                                                    decoration: BoxDecoration(
+                                                      color: _orderModel
+                                                                  .payMethod ==
+                                                              _pm.paymentMethod
+                                                          ? Colors.white
+                                                          : Theme.of(context)
+                                                              .primaryColor,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: textColor,
+                                                        ),
+                                                      ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 10),
+                                                        // TODO: use colored icon or image
+                                                        Icon(
+                                                          _pm.icon,
+                                                          color:
+                                                              Colors.blueGrey,
+                                                        ),
+                                                        SizedBox(width: 20),
+                                                        Text(
+                                                          _pm.name,
+                                                          style: TextStyle(
+                                                            color: _orderModel
+                                                                        .payMethod ==
+                                                                    _pm.paymentMethod
+                                                                ? Colors.black87
+                                                                : Colors.white70,
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        Radio(
+                                                          value:
+                                                              _pm.paymentMethod,
+                                                          groupValue:
+                                                              _orderModel
+                                                                  .payMethod,
+                                                          onChanged:
+                                                              (paymentMethodChoice) =>
+                                                                  _orderModel
+                                                                      .update(
+                                                            payMethod:
+                                                                paymentMethodChoice,
+                                                          ),
+                                                          activeColor: _orderModel
+                                                                      .payMethod ==
+                                                                  _pm.paymentMethod
+                                                              ? buttonBgColor
+                                                              : textColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder: (context, x) =>
+                                                  SizedBox(height: 25),
+                                              itemCount: PaymentMethodModel
+                                                  .orderPaymentMethods.length,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 25,
+                                              bottom: 10,
+                                            ),
+                                            child: Text(
+                                              'Add Coupon',
+                                              style: TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 21,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: customTextField(
+                                              controller: _couponController,
+                                              labelText: 'Coupon Code',
+                                              suffixIcon: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 3),
+                                                child: GestureDetector(
+                                                  onTap: () async =>
+                                                      await Clipboard.getData(
+                                                              'text/plain')
+                                                          .then(
+                                                    (value) => _couponController
+                                                        .text = value.text,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    child: Icon(
+                                                      LineIcons.clipboard,
+                                                      color: textColor,
+                                                    ),
+                                                  ),
                                                 ),
-                                                SizedBox(width: _w * 0.2),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 25,
+                                              right: 15,
+                                              top: 50,
+                                            ),
+                                            child: Row(
+                                              children: [
                                                 Text(
-                                                  'Payment',
+                                                  'Taxation',
                                                   style: TextStyle(
                                                     color: Colors.white70,
-                                                    fontSize: 20,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                Spacer(),
+                                                Text(
+                                                  '\$${(_orderModel.tax).toStringAsFixed(2)}',
+                                                  style: TextStyle(
+                                                    color: Colors.white70,
+                                                    fontSize: 23,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(25),
-                                          child: ListView.separated(
-                                            shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemBuilder: (context, int index) {
-                                              final PaymentMethodModel _pm =
-                                                  PaymentMethodModel
-                                                          .orderPaymentMethods[
-                                                      index];
-
-                                              return GestureDetector(
-                                                onTap: () => _orderModel.update(
-                                                  payMethod: _pm.paymentMethod,
-                                                ),
-                                                child: Container(
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: _orderModel
-                                                                .payMethod ==
-                                                            _pm.paymentMethod
-                                                        ? Colors.white
-                                                        : Theme.of(context)
-                                                            .primaryColor,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: textColor,
-                                                      ),
-                                                    ],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(width: 10),
-                                                      // TODO: use colored icon or image
-                                                      Icon(
-                                                        _pm.icon,
-                                                        color: Colors.blueGrey,
-                                                      ),
-                                                      SizedBox(width: 20),
-                                                      Text(
-                                                        _pm.name,
-                                                        style: TextStyle(
-                                                          color: _orderModel
-                                                                      .payMethod ==
-                                                                  _pm.paymentMethod
-                                                              ? Colors.black87
-                                                              : Colors.white70,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      Spacer(),
-                                                      Radio(
-                                                        value:
-                                                            _pm.paymentMethod,
-                                                        groupValue: _orderModel
-                                                            .payMethod,
-                                                        onChanged:
-                                                            (paymentMethodChoice) =>
-                                                                _orderModel
-                                                                    .update(
-                                                          payMethod:
-                                                              paymentMethodChoice,
-                                                        ),
-                                                        activeColor: _orderModel
-                                                                    .payMethod ==
-                                                                _pm.paymentMethod
-                                                            ? buttonBgColor
-                                                            : textColor,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            separatorBuilder: (context, x) =>
-                                                SizedBox(height: 25),
-                                            itemCount: PaymentMethodModel
-                                                .orderPaymentMethods.length,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 25,
-                                            bottom: 10,
-                                          ),
-                                          child: Text(
-                                            'Add Coupon',
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 21,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: customTextField(
-                                            controller: _couponController,
-                                            labelText: 'Coupon Code',
-                                            suffixIcon: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 3),
-                                              child: GestureDetector(
-                                                onTap: () async =>
-                                                    await Clipboard.getData(
-                                                            'text/plain')
-                                                        .then(
-                                                  (value) => _couponController
-                                                      .text = value.text,
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  child: Icon(
-                                                    LineIcons.clipboard,
-                                                    color: textColor,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 25,
-                                            right: 15,
-                                            top: 50,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Taxation',
-                                                style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Text(
-                                                '\$${(_orderModel.tax).toStringAsFixed(2)}',
-                                                style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontSize: 23,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                             ),
                           ),
@@ -327,9 +335,13 @@ class _OrderPaymentPageState extends MomentumState<OrderPaymentPage> {
                                 minWidth: _w * 0.5,
                                 height: 45,
                                 color: buttonBgColor,
-                                onPressed: () async =>
-                                    await _orderPageController
-                                        .processOrder(_cartModel.cart),
+                                onPressed: () async {
+                                  await _orderPageController
+                                      .processOrder(_cartModel.cart);
+
+                                  // clear cart on order process
+                                  _cartModel.cart.clear();
+                                },
                                 child: Text(
                                   'Order Now',
                                   style: TextStyle(

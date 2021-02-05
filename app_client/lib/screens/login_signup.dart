@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
@@ -43,7 +44,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
         switch (event.action) {
           case AuthEventAction.Success:
             _resetTextEditingControllers();
-             MomentumRouter.clearHistoryWithContext(context);
+            MomentumRouter.clearHistoryWithContext(context);
             MomentumRouter.goto(context, StartPage);
             break;
 
@@ -206,17 +207,10 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
                 final _loginModel = snapshot<LoginSignupForgotModel>();
 
                 return _loginModel.loading
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: _size.height * 0.5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: LinearProgressIndicator(),
-                          ),
-                        ],
+                    ? customLoader(
+                        heightFromTop: _size.height * 0.5,
+                        loaderText: 'loading...',
+                        loaderType: 6,
                       )
                     : Form(
                         key: _loginSignupFormKey,

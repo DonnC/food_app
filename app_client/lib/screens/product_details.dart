@@ -20,6 +20,8 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
     _productDetailsController =
         Momentum.controller<ProductDetailsController>(context);
 
+    _productDetailsController.checkFav();
+
     _product =
         MomentumRouter.getParam<ProductDetailsPageParam>(context).product;
 
@@ -306,7 +308,7 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
                                                 ),
                                                 SizedBox(height: 6),
                                                 Text(
-                                                  '${_product.calories} cal',
+                                                  '${(_product.calories).toStringAsFixed(2)} cal',
                                                   style: TextStyle(
                                                     color: textColor,
                                                   ),
@@ -338,7 +340,7 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
                                                 ),
                                                 SizedBox(height: 6),
                                                 Text(
-                                                  '${_product.votes} vote',
+                                                  '${(_product.votes).toStringAsFixed(1)} vote',
                                                   style: TextStyle(
                                                     color: textColor,
                                                   ),
@@ -354,7 +356,7 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
                                                 ),
                                                 SizedBox(height: 6),
                                                 Text(
-                                                  '${_product.mass} g',
+                                                  '${(_product.mass).toStringAsFixed(1)} g',
                                                   style: TextStyle(
                                                     color: textColor,
                                                   ),

@@ -7,9 +7,6 @@ import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/services/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 
-// TODO: Contribute to scaled_animated_scaffold plugin, have PR
-// TODO: Add shimmer package
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(momentum());
@@ -18,8 +15,8 @@ void main() {
 Momentum momentum() => Momentum(
       key: UniqueKey(),
       restartCallback: main,
-      enableLogging: true, // FIXME: debugging - disable
       child: MyApp(),
+      //appLoader: customLoader(loaderText: 'Initializing...', isInitLoader: true),
       persistSave: (context, key, value) async {
         final sharedPref = await SharedPreferences.getInstance();
         var result = await sharedPref.setString(key, value);
@@ -33,9 +30,9 @@ Momentum momentum() => Momentum(
       controllers: [
         LoginSignupForgotController(),
         ProfilePageController(),
-        CartController(),
         StartPageController(),
         OrderPageController(),
+        CartController()..config(maxTimeTravelSteps: 200),
         UserProfileController()..config(lazy: true),
         HomePageController()..config(lazy: true),
         ProductDetailsController()..config(lazy: true),
@@ -71,3 +68,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// https://www.behance.net/gallery/108452151/Food-Delivery-App-UI-Kit

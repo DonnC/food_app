@@ -13,11 +13,9 @@ class CartController extends MomentumController<CartModel> {
   }
 
   void addToCart(Cart cart) {
-    // FIXME: Avoid redundancy
     final _cart = model.cart;
     _cart.add(cart);
     model.update(cart: _cart);
-    print('[INFO] Product added to cart: ${model.cart.length}');
   }
 
   double get totalPrice {
@@ -33,9 +31,16 @@ class CartController extends MomentumController<CartModel> {
   }
 
   void deleteCartProduct(Cart cart) {
-    // FIXME: Avoid redundancy
     final _cart = model.cart;
     _cart.remove(cart);
     model.update(cart: _cart);
+  }
+
+  void undoDelete() {
+    this.backward();
+  }
+
+  void redoDelete() {
+    this.forward();
   }
 }

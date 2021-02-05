@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
@@ -60,22 +61,27 @@ class FavoritesPage extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : GridView.count(
-                              // TODO: Use staggered grid view instead
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                            : StaggeredGridView.countBuilder(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 30,
-                                children: _userModel.user.favorites
-                                    .map(
-                                      (favProduct) => productContainer(
-                                        context: context,
-                                        product: favProduct,
-                                        cartController: _cartModel.controller,
-                                      ),
-                                    )
-                                    .toList(),
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: _userModel.user.favorites.length,
+                                itemBuilder: (context, index) {
+                                  final favProduct =
+                                      _userModel.user.favorites[index];
+
+                                  return productContainer(
+                                    context: context,
+                                    product: favProduct,
+                                    cartController: _cartModel.controller,
+                                  );
+                                },
+                                staggeredTileBuilder: (index) {
+                                  return StaggeredTile.count(
+                                      1, index.isEven ? 1.2 : 1.4);
+                                },
                               ),
                       ),
                     ),

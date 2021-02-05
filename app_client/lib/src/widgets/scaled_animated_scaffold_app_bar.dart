@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scaled_animated_scaffold/scaled_animated_scaffold.dart';
+
+import '../scaled_animated_scaffold.dart';
 
 /// AppBar for [ScaledAnimatedScaffold].
 ///

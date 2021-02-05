@@ -1,8 +1,8 @@
 database:
   host: localhost
   port: 5432
-  username: postgres
-  password: root
-  databaseName: postgres
+  username: food_app_user
+  password: app_password
+  databaseName: food_app
 
-# aqueduct db upgrade --connect postgres://postgres:root@localhost:5432/food_app
+# aqueduct db upgrade --connect postgres://food_app_user:app_password@localhost:5432/food_app
