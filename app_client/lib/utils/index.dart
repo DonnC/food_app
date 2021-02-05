@@ -16,3 +16,4 @@
 
 export 'color_themes.dart';
 export 'custom_textstyles.dart';
+export 'random_generator.dart';
