@@ -2,12 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
+import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
-import 'package:restaurant_app/utils/index.dart';
+import 'package:restaurant_app/services/index.dart';
+import 'package:restaurant_app/widgets/index.dart';
 
 import 'index.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _CartPageState();
+}
+
+class _CartPageState extends MomentumState<CartPage> {
+  CartController _cartController;
+  DialogService _dialogService;
+
+  @override
+  void initMomentumState() {
+    _cartController = Momentum.controller<CartController>(context);
+    _dialogService = Momentum.service<DialogService>(context);
+
+    _cartController.listen<CartEvent>(
+      state: this,
+      invoke: (event) {
+        switch (event.action) {
+          case CartEventAction.Success:
+            _dialogService.showFloatingFlushbar(
+              context: context,
+              title: event.title,
+              message: event.message,
+            );
+            break;
+          default:
+        }
+      },
+    );
+
+    super.initMomentumState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return RouterPage(
@@ -18,7 +52,6 @@ class CartPage extends StatelessWidget {
           final double _chipRadius = 40;
 
           return MomentumBuilder(
-            //dontRebuildIf: (controller, isTimeTravel) => !isTimeTravel,
             controllers: [CartController],
             builder: (context, snapshot) {
               final _model = snapshot<CartModel>();
@@ -37,121 +70,24 @@ class CartPage extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: SingleChildScrollView(
                         child: _model.cart.isEmpty
-                            ? Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: _h * 0.3),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        LineIcons.shopping_cart,
-                                        color: Colors.grey,
-                                        size: _w * 0.2,
-                                      ),
-                                      SizedBox(height: 30),
-                                      Text(
-                                        'Your cart is empty',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                            ? emptyWidget(
+                                height: _h,
+                                width: _w,
+                                message: 'Your cart is empty',
+                                icon: LineIcons.shopping_cart,
                               )
                             : Column(
                                 children: [
                                   ListView.separated(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: BouncingScrollPhysics(),
                                     itemBuilder: (_, index) {
                                       final Cart product = _model.cart[index];
 
-                                      return Container(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              height: 80,
-                                              width: 80,
-                                              decoration: BoxDecoration(
-                                                color: loginBgColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  20,
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Image.asset(
-                                                  // FIXME: Use network image
-                                                  product.product.imageUrl,
-                                                  fit: BoxFit.contain,
-                                                  height: 60,
-                                                  width: 60,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 15),
-                                            Text(
-                                              '${product.quantity}x',
-                                              style: TextStyle(
-                                                color: textColor,
-                                              ),
-                                            ),
-                                            SizedBox(width: 20),
-                                            Center(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    product.product.name,
-                                                    style: TextStyle(
-                                                      color: Colors.white70,
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Text(
-                                                    product.product.contents,
-                                                    style: TextStyle(
-                                                      color: textColor,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Text(
-                                                    '\$${(product.product.price).toStringAsFixed(2)}',
-                                                    style: TextStyle(
-                                                      color: homePriceColor,
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            GestureDetector(
-                                              onTap: () => _model.controller
-                                                  .deleteCartProduct(product),
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    loginUpperColor,
-                                                radius: 15,
-                                                child: Center(
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                    color: textColor,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      return cartCard(
+                                        product: product,
+                                        onTapCallback: () => _model.controller
+                                            .deleteCartProduct(index),
                                       );
                                     },
                                     separatorBuilder: (_, x) =>
@@ -164,57 +100,13 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                      right: 15,
-                      bottom: 5,
-                    ),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total Price',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              '\$${(_model.controller.totalPrice).toStringAsFixed(2)}',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        _model.cart.isEmpty
-                            ? SizedBox()
-                            : FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                                minWidth: _w * 0.5,
-                                height: 45,
-                                color: buttonBgColor,
-                                onPressed: () => MomentumRouter.goto(
-                                    context, OrderPaymentPage),
-                                child: Text(
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
+                  lowerBottomWidget(
+                    buttonText: 'Next',
+                    width: _w,
+                    price: (_model.controller.totalPrice).toStringAsFixed(2),
+                    isEmptyForCart: _model.cart.isEmpty,
+                    onButtonTap: () =>
+                        MomentumRouter.goto(context, OrderPaymentPage),
                   ),
                 ],
               );

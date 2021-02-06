@@ -41,7 +41,6 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
         for (var favProduct in _userController.model.user.favorites) {
           if (favProduct.id == _product.id) {
             _res = true;
-            print('----- product in fav: ${_product.id}');
           }
         }
       } catch (e) {
@@ -59,8 +58,22 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
 
     if (model.isFavorite) {
       _userController.removeFromFavorites(_product);
+      sendEvent(
+        ProductDetailsEvent(
+          action: ProductDetailsEventAction.Success,
+          message: '${_product.name} removed from your favorites',
+          title: 'Favorite',
+        ),
+      );
     } else {
       _userController.addToFavorites(_product);
+      sendEvent(
+        ProductDetailsEvent(
+          action: ProductDetailsEventAction.Success,
+          message: '${_product.name} added to your favorites',
+          title: 'Favorite',
+        ),
+      );
     }
 
     _checkFavorite();
@@ -100,7 +113,9 @@ class ProductDetailsController extends MomentumController<ProductDetailsModel>
     sendEvent(
       ProductDetailsEvent(
         action: ProductDetailsEventAction.Success,
-        message: 'product added to cart successfully',
+        message:
+            '${model.cartProductCounter}x ${_product.name} added to cart successfully',
+        title: 'Cart',
       ),
     );
 

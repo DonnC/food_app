@@ -27,6 +27,7 @@ class StartPageModel extends MomentumModel<StartPageController> {
   Map<String, dynamic> toJson() {
     return {
       'selectedPageIndex': selectedPageIndex,
+      'appBarTitle': appBarTitle,
     };
   }
 
@@ -35,6 +36,7 @@ class StartPageModel extends MomentumModel<StartPageController> {
 
     return StartPageModel(
       controller,
+      appBarTitle: map['appBarTitle'],
       selectedPageIndex: map['selectedPageIndex'],
     );
   }

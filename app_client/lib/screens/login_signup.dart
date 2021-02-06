@@ -2,8 +2,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:momentum/momentum.dart';
+
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/screens/index.dart';
@@ -72,6 +72,8 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
         }
       },
     );
+
+    super.initMomentumState();
   }
 
   void _resetTextEditingControllers() {
@@ -209,7 +211,7 @@ class _LoginSignupForgotState extends MomentumState<LoginSignupForgot> {
                 return _loginModel.loading
                     ? customLoader(
                         heightFromTop: _size.height * 0.5,
-                        loaderText: 'loading...',
+                        loaderText: 'authenticating...',
                         loaderType: 6,
                       )
                     : Form(

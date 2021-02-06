@@ -71,11 +71,38 @@ Widget customLoader({
   bool isInitLoader: false,
 }) {
   return isInitLoader
-      ? Scaffold(
-          backgroundColor: loginBgColor,
-          body: Center(
-            child: _mainLoader(heightFromTop, loaderText, loaderType),
+      ? MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Food App',
+          theme: colorTheme,
+          home: _InitLoader(
+            heightFromTop: heightFromTop,
+            loaderText: loaderText,
+            loaderType: loaderType,
           ),
         )
       : _mainLoader(heightFromTop, loaderText, loaderType);
+}
+
+class _InitLoader extends StatelessWidget {
+  final double heightFromTop;
+  final String loaderText;
+  final int loaderType;
+
+  const _InitLoader(
+      {Key key, this.heightFromTop, this.loaderText, this.loaderType})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: loginBgColor,
+      body: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.4),
+        child: Center(
+          child: _mainLoader(heightFromTop, loaderText, 1),
+        ),
+      ),
+    );
+  }
 }

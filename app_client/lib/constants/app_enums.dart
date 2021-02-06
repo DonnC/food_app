@@ -38,6 +38,13 @@ enum ProductDetailsEventAction {
   Error,
 }
 
+enum CartEventAction {
+  None,
+  Success,
+  Fail,
+}
+
+// ---------------------------------
 enum ProfileEditField {
   // used to know which field is edited
   None,

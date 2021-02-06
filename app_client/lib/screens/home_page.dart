@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
+
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
+import 'package:restaurant_app/services/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 import 'package:restaurant_app/widgets/index.dart';
 
@@ -15,11 +17,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends MomentumState<HomePage> {
   HomePageController _homePageController;
   CartController _cartController;
+  DialogService _dialogService;
 
   @override
   void initMomentumState() {
     _homePageController = Momentum.controller<HomePageController>(context);
     _cartController = Momentum.controller<CartController>(context);
+    _dialogService = Momentum.service<DialogService>(context);
 
     // listen for home-page events
     _homePageController.listen<HomePageEvent>(
@@ -32,6 +36,24 @@ class _HomePageState extends MomentumState<HomePage> {
             default:
           }
         });
+
+    // listen for cart events
+    _cartController.listen<CartEvent>(
+        state: this,
+        invoke: (event) {
+          switch (event.action) {
+            case CartEventAction.Success:
+              _dialogService.showFloatingFlushbar(
+                context: context,
+                title: event.title,
+                message: event.message,
+              );
+              break;
+            default:
+          }
+        });
+
+    super.initMomentumState();
   }
 
   Widget _buildFoodCategoryField(int index) {

@@ -38,28 +38,11 @@ class FavoritesPage extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: SingleChildScrollView(
                         child: _userModel.user.favorites.isEmpty
-                            ? Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: _h * 0.3),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        LineIcons.heart_o,
-                                        color: Colors.grey,
-                                        size: _w * 0.2,
-                                      ),
-                                      SizedBox(height: 30),
-                                      Text(
-                                        'Your favorites is empty',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                            ? emptyWidget(
+                                height: _h,
+                                width: _w,
+                                message: 'Your favorites is empty',
+                                icon: LineIcons.heart_o,
                               )
                             : StaggeredGridView.countBuilder(
                                 crossAxisCount: 2,
@@ -76,11 +59,14 @@ class FavoritesPage extends StatelessWidget {
                                     context: context,
                                     product: favProduct,
                                     cartController: _cartModel.controller,
+                                    showCartButton: false,
                                   );
                                 },
                                 staggeredTileBuilder: (index) {
                                   return StaggeredTile.count(
-                                      1, index.isEven ? 1.2 : 1.4);
+                                    1,
+                                    index.isEven ? 1.2 : 1.4,
+                                  );
                                 },
                               ),
                       ),

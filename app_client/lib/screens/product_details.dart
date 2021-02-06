@@ -4,6 +4,7 @@ import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
+import 'package:restaurant_app/services/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 
 class ProductDetailsPage extends StatefulWidget {
@@ -13,12 +14,14 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
   ProductDetailsController _productDetailsController;
+  DialogService _dialogService;
   Product _product;
 
   @override
   void initMomentumState() {
     _productDetailsController =
         Momentum.controller<ProductDetailsController>(context);
+    _dialogService = Momentum.service<DialogService>(context);
 
     _productDetailsController.checkFav();
 
@@ -30,13 +33,18 @@ class _ProductDetailsPageState extends MomentumState<ProductDetailsPage> {
       invoke: (event) {
         switch (event.action) {
           case ProductDetailsEventAction.Success:
-            print('event fired, message: ${event.message}');
-            // TODO: show toast / dialog
+            _dialogService.showFloatingFlushbar(
+              context: context,
+              title: event.title,
+              message: event.message,
+            );
             break;
           default:
         }
       },
     );
+
+    super.initMomentumState();
   }
 
   @override

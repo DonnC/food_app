@@ -10,6 +10,7 @@ Widget productContainer({
   BuildContext context,
   Product product,
   CartController cartController,
+  bool showCartButton: true,
 }) {
   final _size = MediaQuery.of(context).size;
 
@@ -66,18 +67,21 @@ Widget productContainer({
                 ),
               ),
               Spacer(),
-              InkWell(
-                onTap: () => cartController.addToCart(Cart(product: product)),
-                child: CircleAvatar(
-                  backgroundColor: buttonBgColor,
-                  child: Center(
-                    child: Icon(
-                      LineIcons.shopping_cart,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ),
-              ),
+              showCartButton
+                  ? InkWell(
+                      onTap: () =>
+                          cartController.addToCart(Cart(product: product)),
+                      child: CircleAvatar(
+                        backgroundColor: buttonBgColor,
+                        child: Center(
+                          child: Icon(
+                            LineIcons.shopping_cart,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
             ],
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:momentum/momentum.dart';
+import 'package:restaurant_app/components/index.dart';
+import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
 
 import 'index.dart';
@@ -10,12 +12,6 @@ class CartController extends MomentumController<CartModel> {
       this,
       cart: List<Cart>.empty(growable: true),
     );
-  }
-
-  void addToCart(Cart cart) {
-    final _cart = model.cart;
-    _cart.add(cart);
-    model.update(cart: _cart);
   }
 
   double get totalPrice {
@@ -30,17 +26,41 @@ class CartController extends MomentumController<CartModel> {
     return _totalPrice;
   }
 
-  void deleteCartProduct(Cart cart) {
-    final _cart = model.cart;
-    _cart.remove(cart);
-    model.update(cart: _cart);
+  void addToCart(Cart cart) {
+    var _cartList = List<Cart>.from(model.cart);
+    _cartList.add(cart);
+
+    sendEvent(
+      CartEvent(
+        action: CartEventAction.Success,
+        title: 'Add to Cart',
+        message:
+            '${cart.quantity}x ${cart.product.name} successfully added to cart',
+      ),
+    );
+
+    model.update(cart: _cartList);
   }
 
-  void undoDelete() {
+  void deleteCartProduct(int cartAtIndex) {
+    var _cartList = List<Cart>.from(model.cart);
+    _cartList.removeAt(cartAtIndex);
+
+    sendEvent(
+      CartEvent(
+        action: CartEventAction.Success,
+        title: 'Cart',
+        message: 'Product successfully deleted from cart',
+      ),
+    );
+    model.update(cart: _cartList);
+  }
+
+  void undoCartDelete() {
     this.backward();
   }
 
-  void redoDelete() {
+  void redoCartDelete() {
     this.forward();
   }
 }

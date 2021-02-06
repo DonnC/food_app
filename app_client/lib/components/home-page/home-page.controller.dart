@@ -23,7 +23,7 @@ class HomePageController extends MomentumController<HomePageModel> {
   }
 
   Future<void> loadAllProducts() async {
-    final _productService = getService<ProductService>();
+    final _productService = service<ProductService>();
 
     model.update(loading: true);
 

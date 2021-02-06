@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
+
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/widgets/index.dart';
 
@@ -33,28 +34,11 @@ class NotificationPage extends StatelessWidget {
                       //padding: const EdgeInsets.all(15),
                       child: SingleChildScrollView(
                         child: _userModel.user.notifications.isEmpty
-                            ? Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: _h * 0.3),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        LineIcons.bell_slash_o,
-                                        color: Colors.grey,
-                                        size: _w * 0.2,
-                                      ),
-                                      SizedBox(height: 30),
-                                      Text(
-                                        'You have no any new notifications!',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                            ? emptyWidget(
+                                height: _h,
+                                width: _w,
+                                message: 'You have no any new notifications!',
+                                icon: LineIcons.bell_slash_o,
                               )
                             : ListView.builder(
                                 shrinkWrap: true,

@@ -35,7 +35,13 @@ dependencies:
   shared_preferences: ^0.5.12+4
   shimmer: ^1.1.2
   flutter_spinkit: ^4.1.2+1
-  route_transitions: ^1.0.2
+  another_flushbar: ^1.10.8
+  fluttertoast: ^7.1.6
+  scaled_animated_scaffold:
+    git:
+      url: https://github.com/DonnC/scaled_animated_scaffold.git
+      ref: layered-body-widget
+
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/services/index.dart';
 import 'package:restaurant_app/utils/index.dart';
+import 'package:restaurant_app/widgets/index.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +17,8 @@ Momentum momentum() => Momentum(
       key: UniqueKey(),
       restartCallback: main,
       child: MyApp(),
-      //appLoader: customLoader(loaderText: 'Initializing...', isInitLoader: true),
+      appLoader:
+          customLoader(loaderText: 'Initializing...', isInitLoader: true),
       persistSave: (context, key, value) async {
         final sharedPref = await SharedPreferences.getInstance();
         var result = await sharedPref.setString(key, value);
@@ -41,6 +43,7 @@ Momentum momentum() => Momentum(
         AuthService(),
         UserService(),
         ProductService(),
+        DialogService(),
         MomentumRouter(
           [
             LoginSignupForgot(),
@@ -68,5 +71,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

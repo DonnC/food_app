@@ -27,6 +27,7 @@ class _ProfilePageState extends MomentumState<ProfilePage> {
     _textEditingController = TextEditingController();
 
     // TODO: listen to profile change event
+    super.initMomentumState();
   }
 
   void _setTextControllerInitField(ProfileEditField field) {

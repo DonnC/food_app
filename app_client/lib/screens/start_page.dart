@@ -8,7 +8,7 @@ import 'package:momentum/momentum.dart';
 import 'package:restaurant_app/components/index.dart';
 import 'package:restaurant_app/screens/index.dart';
 import 'package:restaurant_app/utils/index.dart';
-import 'package:restaurant_app/widgets/index.dart';
+import 'package:scaled_animated_scaffold/scaled_animated_scaffold.dart';
 
 class StartPage extends StatelessWidget {
   final GlobalKey<ScaledAnimatedScaffoldState> _key =
@@ -24,6 +24,8 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _cartController = Momentum.controller<CartController>(context);
+
     return RouterPage(
       child: MomentumBuilder(
         controllers: [
@@ -65,13 +67,13 @@ class StartPage extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.undo),
                                 onPressed: () =>
-                                    _cartModel.controller.undoDelete(),
+                                    _cartController.undoCartDelete(),
                               ),
                               SizedBox(width: 15),
                               IconButton(
                                 icon: Icon(Icons.redo),
                                 onPressed: () =>
-                                    _cartModel.controller.redoDelete(),
+                                    _cartController.redoCartDelete(),
                               ),
                             ],
                           ),

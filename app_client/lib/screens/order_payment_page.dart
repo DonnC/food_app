@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:momentum/momentum.dart';
+
 import 'package:restaurant_app/components/index.dart';
-import 'package:restaurant_app/constants/index.dart';
 import 'package:restaurant_app/models/index.dart';
 import 'package:restaurant_app/utils/index.dart';
 import 'package:restaurant_app/widgets/index.dart';
@@ -22,6 +22,10 @@ class _OrderPaymentPageState extends MomentumState<OrderPaymentPage> {
     _couponController = TextEditingController();
 
     _orderPageController = Momentum.controller<OrderPageController>(context);
+
+    // TODO: Listen for order events
+
+    super.initMomentumState();
   }
 
   @override
@@ -61,17 +65,9 @@ class _OrderPaymentPageState extends MomentumState<OrderPaymentPage> {
                             height: _h * 0.8,
                             child: SingleChildScrollView(
                               child: _cartModel.cart == null
-                                  ? Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: _h * 0.3,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        ],
-                                      ),
+                                  ? customLoader(
+                                      loaderText: 'loading...',
+                                      loaderType: 2,
                                     )
                                   : SingleChildScrollView(
                                       child: Column(
@@ -297,60 +293,21 @@ class _OrderPaymentPageState extends MomentumState<OrderPaymentPage> {
                           ),
                         ),
                         Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                            right: 15,
-                            bottom: 20,
-                          ),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Total Price',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    '\$${(_cartModel.controller.totalPrice + _orderModel.tax).toStringAsFixed(2)}',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                                minWidth: _w * 0.5,
-                                height: 45,
-                                color: buttonBgColor,
-                                onPressed: () async {
-                                  await _orderPageController
-                                      .processOrder(_cartModel.cart);
+                        lowerBottomWidget(
+                          leftPadding: 25,
+                          bottomPadding: 20,
+                          buttonText: 'Order Now',
+                          width: _w,
+                          price: (_cartModel.controller.totalPrice +
+                                  _orderModel.tax)
+                              .toStringAsFixed(2),
+                          onButtonTap: () async {
+                            await _orderPageController
+                                .processOrder(_cartModel.cart);
 
-                                  // clear cart on order process
-                                  _cartModel.cart.clear();
-                                },
-                                child: Text(
-                                  'Order Now',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            // clear cart on order process
+                            _cartModel.cart.clear();
+                          },
                         ),
                       ],
                     ),
