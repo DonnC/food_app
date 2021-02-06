@@ -1,10 +1,10 @@
 # [Flutter Food App](https://www.behance.net/gallery/108452151/Food-Delivery-App-UI-Kit)
-a full-stack dart food delivery mobile app
+a full-stack flutter food delivery mobile app
 
 ### Mobile app
 - A food delivery app based on `behance` design by [Huzeyfe](https://www.behance.net/gallery/108452151/Food-Delivery-App-UI-Kit)
 
-### [Demo video](demo/vid.mp4)
+### Latest Demo video [here](demo/vid.mp4)
 ![demo](demo/vid.gif)
 
 ## [Original design](https://www.behance.net/gallery/108452151/Food-Delivery-App-UI-Kit)
@@ -58,8 +58,8 @@ a full-stack dart food delivery mobile app
 ## Features
 - Food App `Flutter` client in [app_client](app_client/lib)
 - Food App `Aqueduct` server in [app_server](app_server/lib)
-- ✔ Powered by flutter & [Momentum](https://xamdev.gq) state management
-- [Aqueduct]() dart back-end server
+- ✔ Powered by flutter & [Momentum](https://xamdev.gq/momentum/) state management
+- [Aqueduct](https://aqueduct.io/) dart back-end server
 
 ## TODOs
 - [x] Add cart badge counter
@@ -74,8 +74,8 @@ a full-stack dart food delivery mobile app
 - [ ] Implement search and filter on home page
 - [ ] Implement momentum`s event listen on controller fired events
 - [ ] Add animations and custom navigation transitions
-- [ ] Fix cart page `time-travel` (undo & redo on cart product delete)
-- [ ] Fix scaffolled menu `Multiple duplicate Global Key` problem
+- [x] Fix cart page `time-travel` (undo & redo on cart product delete)
+- [ ] Fix scaffolled menu `Multiple duplicate Global Key` & `incorrect use of Parent Widget` problem
 - [ ] Fix `Profile-Page` pixel overlap on profile-field edit
 - [ ] Fix `Order-Page` pixel overlap on using `coupon` textfield
 - [ ] Fix `Login-Page` textfield error validations messages
